@@ -89,28 +89,28 @@ class MainActivity : AppCompatActivity() {
 
     private fun translateText(text: String, source: String = "en", target: String = "hi") {
 
+        textView.text = "Source: $text"
+
         doAsync {
-            Log.e("translateText:", text)
+            try {
+                val options = TranslateOptions.newBuilder()
+                    .setApiKey("AIzaSyA5tN8V2fTyXr6RyfZ0rnsQLZcoCsljnHc")
+                    .build()
+                val translate = options.service
+//                val translate = TranslateOptions.getDefaultInstance().service
 
-            val options = TranslateOptions.newBuilder()
-                .setApiKey("AIzaSyA5tN8V2fTyXr6RyfZ0rnsQLZcoCsljnHc")
-                .build()
-            val translate = options.service
-            val translation = translate.translate(
-                text,
-                Translate.TranslateOption.sourceLanguage("source"),
-                Translate.TranslateOption.targetLanguage("target")
-            )
-
-            Log.e("translateText:", "dewewr" + translation.translatedText)
-
-
-            Log.e("translateText:", translation.translatedText)
-
-            uiThread {
-                textView.text = translation.translatedText
-
+                val translation = translate.translate(
+                    text,
+                    Translate.TranslateOption.sourceLanguage(source),
+                    Translate.TranslateOption.targetLanguage(target)
+                )
+                uiThread {
+                    textView.text = textView.text.toString() + " \n" + "Target: " + translation.translatedText
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
+
 
         }
 
