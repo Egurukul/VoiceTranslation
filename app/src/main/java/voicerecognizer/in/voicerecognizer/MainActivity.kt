@@ -30,13 +30,7 @@ class MainActivity : AppCompatActivity() {
         btnSpeak.setOnClickListener {
             promptSpeechInput()
         }
-
-
-//        val translateOptions = TranslateOptions.newBuilder().setApiKey("AIzaSyA5tN8V2fTyXr6RyfZ0rnsQLZcoCsljnHc")
-//            .build()
-//        translate = TranslateOptions.getDefaultInstance().service
     }
-
 
     /**
      * Showing google speech input dialog
@@ -77,10 +71,7 @@ class MainActivity : AppCompatActivity() {
 
                     val result = data
                         .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-//                    txtSpeechInput.setText(result[0])
-                    Log.e("onActivityResult:", result[0])
                     translateText(result[0])
-
                 }
             }
         }
@@ -88,7 +79,6 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun translateText(text: String, source: String = "en", target: String = "hi") {
-
         textView.text = "Source: $text"
 
         doAsync {
@@ -97,8 +87,6 @@ class MainActivity : AppCompatActivity() {
                     .setApiKey("AIzaSyA5tN8V2fTyXr6RyfZ0rnsQLZcoCsljnHc")
                     .build()
                 val translate = options.service
-//                val translate = TranslateOptions.getDefaultInstance().service
-
                 val translation = translate.translate(
                     text,
                     Translate.TranslateOption.sourceLanguage(source),
